@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DVLD_Business;
 
 namespace DVLD
 {
@@ -15,6 +16,21 @@ namespace DVLD
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            clsCountry country = clsCountry.Find(1);
+
+            if (country != null)
+            {
+                MessageBox.Show(country.CountryName);
+            }
+            else
+            {
+                MessageBox.Show("Country not found.");
+            }
+
         }
     }
 }

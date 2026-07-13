@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Data;
 
 
 namespace DVLD_DataAccess
@@ -92,6 +93,35 @@ namespace DVLD_DataAccess
 
 
             return isFound;
+        }
+        public static DataTable GetAllCountries()
+        {
+            DataTable countriesTable = new DataTable();
+
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query = "SELECT CountryID, CountryName FROM dbo.Countries ORDER BY CountryName";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                countriesTable.Load(reader);
+
+                reader.Close();
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return countriesTable;
         }
     }
 }

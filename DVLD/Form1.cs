@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DVLD_Business;
+using System.Data;
 
 namespace DVLD
 {
@@ -24,12 +25,23 @@ namespace DVLD
 
             if (country != null)
             {
-                MessageBox.Show(country.CountryID.ToString());
+                MessageBox.Show( $"Country Name: {cbCountries.Text}\n" + $"Country ID: {cbCountries.SelectedValue}");
             }
             else
             {
                 MessageBox.Show("Country not found.");
             }
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            DataTable countriesTable = clsCountry.GetAllCountries();
+
+            cbCountries.DisplayMember = "CountryName";
+            cbCountries.ValueMember = "CountryID";
+            cbCountries.DataSource = countriesTable;
+
 
         }
     }

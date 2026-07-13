@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DVLD_DataAccess;
+using System.Data;
 
 namespace DVLD_Business
 {
@@ -46,6 +47,10 @@ namespace DVLD_Business
             {
                 return null;
             }
+        }
+        public static DataTable GetAllCountries()
+        {
+            return clsCountryData.GetAllCountries();
         }
 
     }

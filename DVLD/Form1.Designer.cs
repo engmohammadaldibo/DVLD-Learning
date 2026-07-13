@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.btnTestCountry = new System.Windows.Forms.Button();
+            this.cbCountries = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btnTestCountry
@@ -41,14 +42,25 @@
             this.btnTestCountry.UseVisualStyleBackColor = true;
             this.btnTestCountry.Click += new System.EventHandler(this.button1_Click);
             // 
+            // cbCountries
+            // 
+            this.cbCountries.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCountries.FormattingEnabled = true;
+            this.cbCountries.Location = new System.Drawing.Point(421, 102);
+            this.cbCountries.Name = "cbCountries";
+            this.cbCountries.Size = new System.Drawing.Size(121, 21);
+            this.cbCountries.TabIndex = 1;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.cbCountries);
             this.Controls.Add(this.btnTestCountry);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }
@@ -56,6 +68,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnTestCountry;
+        private System.Windows.Forms.ComboBox cbCountries;
     }
 }
 

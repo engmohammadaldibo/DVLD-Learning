@@ -19,20 +19,29 @@ namespace DVLD
             InitializeComponent();
         }
 
+
         private void button1_Click(object sender, EventArgs e)
         {
-            clsCountry country = clsCountry.Find("Syria");
+            clsPerson person = clsPerson.Find(1);
 
-            if (country != null)
+            if (person != null)
             {
-                MessageBox.Show( $"Country Name: {cbCountries.Text}\n" + $"Country ID: {cbCountries.SelectedValue}");
+                string fullName =
+                    $"{person.FirstName} {person.SecondName} " +
+                    $"{person.ThirdName} {person.LastName}";
+
+                MessageBox.Show(
+                    $"Person ID: {person.PersonID}\n" +
+                    $"National No: {person.NationalNo}\n" +
+                    $"Full Name: {fullName}");
             }
             else
             {
-                MessageBox.Show("Country not found.");
+                MessageBox.Show("Person not found.");
             }
-
         }
+
+     
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -42,6 +51,13 @@ namespace DVLD
             cbCountries.ValueMember = "CountryID";
             cbCountries.DataSource = countriesTable;
 
+            dgvPeople.DataSource = clsPerson.GetAllPeople();
+
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
     }

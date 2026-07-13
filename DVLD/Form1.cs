@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DVLD_Business;
-using System.Data;
+using DVLD.People;
+
 
 namespace DVLD
 {
@@ -17,57 +18,15 @@ namespace DVLD
         public Form1()
         {
             InitializeComponent();
+        
         }
 
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (dgvPeople.CurrentRow == null)
-            {
-                MessageBox.Show("Select a person first.");
-                return;
-            }
+            frmListPeople peopleForm = new frmListPeople();
 
-            int personID = Convert.ToInt32(
-                dgvPeople.CurrentRow.Cells["PersonID"].Value);
-
-            clsPerson person = clsPerson.Find(personID);
-
-            if (person == null)
-            {
-                MessageBox.Show("Person not found.");
-                return;
-            }
-
-            if (!person.NationalNo.StartsWith("T"))
-            {
-                MessageBox.Show(
-                    "For safety, only test persons can be deleted.");
-                return;
-            }
-
-            DialogResult result = MessageBox.Show(
-                $"Delete test person ID {personID}?",
-                "Confirm Delete",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
-
-            if (result == DialogResult.No)
-            {
-                return;
-            }
-
-            if (clsPerson.DeletePerson(personID))
-            {
-                MessageBox.Show("Person deleted successfully.");
-
-                dgvPeople.DataSource = clsPerson.GetAllPeople();
-            }
-            else
-            {
-                MessageBox.Show(
-                    "Delete failed. The person may be linked to other records.");
-            }
+            peopleForm.ShowDialog();
         }
 
      

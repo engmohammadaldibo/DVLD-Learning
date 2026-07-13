@@ -392,5 +392,41 @@ namespace DVLD_DataAccess
 
             return isFound;
         }
+        public static bool IsPersonExist(string NationalNo)
+        {
+            bool isFound = false;
+
+            SqlConnection connection =
+                new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query =
+                @"SELECT 1
+          FROM dbo.People
+          WHERE NationalNo = @NationalNo";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue(
+                "@NationalNo", NationalNo);
+
+            try
+            {
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                isFound = result != null;
+            }
+            catch (Exception)
+            {
+                isFound = false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return isFound;
+        }
     }
 }

@@ -202,6 +202,10 @@ namespace DVLD_Business
         {
             return clsPersonData.IsPersonExist(PersonID);
         }
+        public static bool IsPersonExist(string NationalNo)
+        {
+            return clsPersonData.IsPersonExist(NationalNo);
+        }
 
     }
 }

@@ -40,7 +40,7 @@
             this.btnTestCountry.Name = "btnTestCountry";
             this.btnTestCountry.Size = new System.Drawing.Size(143, 23);
             this.btnTestCountry.TabIndex = 0;
-            this.btnTestCountry.Text = "Test Country";
+            this.btnTestCountry.Text = "Manage People";
             this.btnTestCountry.UseVisualStyleBackColor = true;
             this.btnTestCountry.Click += new System.EventHandler(this.button1_Click);
             // 

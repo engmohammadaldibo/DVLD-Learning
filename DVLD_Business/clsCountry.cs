@@ -22,6 +22,7 @@ namespace DVLD_Business
         public static clsCountry Find(int CountryID)
         {
 
+
             string CountryName = "";
 
             if (clsCountryData.GetCountryInfoByID(CountryID, ref CountryName))
@@ -33,7 +34,19 @@ namespace DVLD_Business
                 return null;
             }
         }
+        public static clsCountry Find(string CountryName)
+        {
+            int CountryID = -1;
 
+            if (clsCountryData.GetCountryInfoByName(CountryName, ref CountryID))
+            {
+                return new clsCountry(CountryID, CountryName);
+            }
+            else
+            {
+                return null;
+            }
+        }
 
     }
 }

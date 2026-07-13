@@ -51,5 +51,47 @@ namespace DVLD_DataAccess
 
             return isFound;
         }
+
+
+        public static bool GetCountryInfoByName(string CountryName, ref int CountryID)
+
+
+        {
+            bool isFound = false;
+
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query = "SELECT CountryID FROM dbo.Countries WHERE CountryName = @CountryName";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@CountryName", CountryName);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    isFound = true;
+                    CountryID = (int)reader["CountryID"];
+                }
+
+                reader.Close();
+
+            }
+            catch (Exception)
+            {
+                isFound = false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+
+            return isFound;
+        }
     }
 }

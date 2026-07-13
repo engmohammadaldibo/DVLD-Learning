@@ -20,11 +20,11 @@ namespace DVLD
 
         private void button1_Click(object sender, EventArgs e)
         {
-            clsCountry country = clsCountry.Find(1);
+            clsCountry country = clsCountry.Find("Syria");
 
             if (country != null)
             {
-                MessageBox.Show(country.CountryName);
+                MessageBox.Show(country.CountryID.ToString());
             }
             else
             {

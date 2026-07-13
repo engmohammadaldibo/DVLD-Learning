@@ -88,17 +88,13 @@ namespace DVLD.People
                 return;
             }
 
-            int personID = Convert.ToInt32(
-                dgvPeople.CurrentRow
-                .Cells["PersonID"].Value);
+            int personID = Convert.ToInt32(dgvPeople.CurrentRow.Cells["PersonID"].Value);
 
-            frmAddUpdatePerson updatePersonForm =
-                new frmAddUpdatePerson(personID);
+            frmAddUpdatePerson updatePersonForm = new frmAddUpdatePerson(personID);
 
             updatePersonForm.ShowDialog();
 
-            dgvPeople.DataSource =
-                clsPerson.GetAllPeople();
+            dgvPeople.DataSource = clsPerson.GetAllPeople();
         }
     }
 }

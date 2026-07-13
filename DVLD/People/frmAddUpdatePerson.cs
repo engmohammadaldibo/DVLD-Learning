@@ -130,7 +130,7 @@ namespace DVLD.People
 
             dtpDateOfBirth.Value = _Person.DateOfBirth;
 
-            if (_Person.Gender == 0)
+            if (_Person.Gendor == 0)
             {
                 rbMale.Checked = true;
             }
@@ -299,7 +299,7 @@ namespace DVLD.People
             _Person.DateOfBirth =
                 dtpDateOfBirth.Value.Date;
 
-            _Person.Gender =
+            _Person.Gendor =
                 rbMale.Checked ? (byte)0 : (byte)1;
 
             _Person.Address =
@@ -407,6 +407,16 @@ namespace DVLD.People
             object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void label1_Click(
+    object sender, EventArgs e)
+        {
+        }
+
+        private void lblPersonID_Click(
+            object sender, EventArgs e)
+        {
         }
     }
 }

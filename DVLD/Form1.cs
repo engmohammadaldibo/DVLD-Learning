@@ -22,22 +22,51 @@ namespace DVLD
 
         private void button1_Click(object sender, EventArgs e)
         {
-            clsPerson person = clsPerson.Find(1);
-
-            if (person != null)
+            if (dgvPeople.CurrentRow == null)
             {
-                string fullName =
-                    $"{person.FirstName} {person.SecondName} " +
-                    $"{person.ThirdName} {person.LastName}";
+                MessageBox.Show("Select a person first.");
+                return;
+            }
 
+            int personID = Convert.ToInt32(
+                dgvPeople.CurrentRow.Cells["PersonID"].Value);
+
+            clsPerson person = clsPerson.Find(personID);
+
+            if (person == null)
+            {
+                MessageBox.Show("Person not found.");
+                return;
+            }
+
+            if (!person.NationalNo.StartsWith("T"))
+            {
                 MessageBox.Show(
-                    $"Person ID: {person.PersonID}\n" +
-                    $"National No: {person.NationalNo}\n" +
-                    $"Full Name: {fullName}");
+                    "For safety, only test persons can be deleted.");
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(
+                $"Delete test person ID {personID}?",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.No)
+            {
+                return;
+            }
+
+            if (clsPerson.DeletePerson(personID))
+            {
+                MessageBox.Show("Person deleted successfully.");
+
+                dgvPeople.DataSource = clsPerson.GetAllPeople();
             }
             else
             {
-                MessageBox.Show("Person not found.");
+                MessageBox.Show(
+                    "Delete failed. The person may be linked to other records.");
             }
         }
 

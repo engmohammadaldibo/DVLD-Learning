@@ -48,6 +48,8 @@ namespace DVLD_Business
             this.Email = Email;
             this.NationalityCountryID = NationalityCountryID;
             this.ImagePath = ImagePath;
+
+            Mode = enMode.Update;
         }
 
         public static clsPerson Find(int PersonID)
@@ -101,9 +103,105 @@ namespace DVLD_Business
             return null;
         }
 
+        private bool _AddNewPerson()
+        {
+            PersonID = clsPersonData.AddNewPerson(
+                NationalNo,
+                FirstName,
+                SecondName,
+                ThirdName,
+                LastName,
+                DateOfBirth,
+                Gendor,
+                Address,
+                Phone,
+                Email,
+                NationalityCountryID,
+                ImagePath);
+
+            return PersonID != -1;
+        }
+
+        public bool Save()
+        {
+            switch (Mode)
+            {
+                case enMode.AddNew:
+                    if (_AddNewPerson())
+                    {
+                        Mode = enMode.Update;
+                        return true;
+                    }
+
+                    return false;
+
+                case enMode.Update:
+                    // سنضيف Update لاحقًا.
+                    return _UpdatePerson();
+            }
+
+            return false;
+        }
+
         public static DataTable GetAllPeople()
         {
             return clsPersonData.GetAllPeople();
         }
+
+        private enum enMode
+        {
+            AddNew = 0,
+            Update = 1
+        }
+
+        private enMode Mode;
+
+        public clsPerson()
+        {
+            PersonID = -1;
+            NationalNo = "";
+            FirstName = "";
+            SecondName = "";
+            ThirdName = "";
+            LastName = "";
+            DateOfBirth = DateTime.Now;
+            Gendor = 0;
+            Address = "";
+            Phone = "";
+            Email = "";
+            NationalityCountryID = -1;
+            ImagePath = "";
+
+            Mode = enMode.AddNew;
+        }
+
+        private bool _UpdatePerson()
+        {
+            return clsPersonData.UpdatePerson(
+                PersonID,
+                NationalNo,
+                FirstName,
+                SecondName,
+                ThirdName,
+                LastName,
+                DateOfBirth,
+                Gendor,
+                Address,
+                Phone,
+                Email,
+                NationalityCountryID,
+                ImagePath);
+        }
+
+        public static bool DeletePerson(int PersonID)
+        {
+            return clsPersonData.DeletePerson(PersonID);
+        }
+
+        public static bool IsPersonExist(int PersonID)
+        {
+            return clsPersonData.IsPersonExist(PersonID);
+        }
+
     }
 }

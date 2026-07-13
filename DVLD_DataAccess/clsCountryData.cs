@@ -123,5 +123,87 @@ namespace DVLD_DataAccess
 
             return countriesTable;
         }
+
+        public static bool GetPersonInfoByID(
+    int PersonID,
+    ref string NationalNo,
+    ref string FirstName,
+    ref string SecondName,
+    ref string ThirdName,
+    ref string LastName,
+    ref DateTime DateOfBirth,
+    ref byte Gendor,
+    ref string Address,
+    ref string Phone,
+    ref string Email,
+    ref int NationalityCountryID,
+    ref string ImagePath)
+        {
+            bool isFound = false;
+
+            SqlConnection connection =
+                new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query =
+                @"SELECT PersonID, NationalNo, FirstName, SecondName,
+                 ThirdName, LastName, DateOfBirth, Gendor,
+                 Address, Phone, Email, NationalityCountryID,
+                 ImagePath
+          FROM dbo.People
+          WHERE PersonID = @PersonID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@PersonID", PersonID);
+
+            try
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    isFound = true;
+
+                    NationalNo = (string)reader["NationalNo"];
+                    FirstName = (string)reader["FirstName"];
+                    SecondName = (string)reader["SecondName"];
+
+                    ThirdName = reader["ThirdName"] == DBNull.Value
+                        ? ""
+                        : (string)reader["ThirdName"];
+
+                    LastName = (string)reader["LastName"];
+                    DateOfBirth = Convert.ToDateTime(reader["DateOfBirth"]);
+                    Gendor = Convert.ToByte(reader["Gendor"]);
+                    Address = (string)reader["Address"];
+                    Phone = (string)reader["Phone"];
+
+                    Email = reader["Email"] == DBNull.Value
+                        ? ""
+                        : (string)reader["Email"];
+
+                    NationalityCountryID =
+                        Convert.ToInt32(reader["NationalityCountryID"]);
+
+                    ImagePath = reader["ImagePath"] == DBNull.Value
+                        ? ""
+                        : (string)reader["ImagePath"];
+                }
+
+                reader.Close();
+            }
+            catch (Exception)
+            {
+                isFound = false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return isFound;
+        }
     }
 }

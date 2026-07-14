@@ -13,15 +13,43 @@ namespace DVLD.People
 {
     public partial class frmListPeople : Form
     {
+
+        private DataTable _PeopleTable;
+
         public frmListPeople()
         {
             InitializeComponent();
+
+            cbFilterBy.SelectedIndexChanged += cbFilterBy_SelectedIndexChanged;
+
+            txtFilterValue.TextChanged += txtFilterValue_TextChanged;
         }
 
-        private void frmListPeople_Load(object sender, EventArgs e)
+        private void frmListPeople_Load(
+    object sender, EventArgs e)
         {
-            dgvPeople.DataSource = clsPerson.GetAllPeople();
+            cbFilterBy.Items.Clear();
 
+            cbFilterBy.Items.AddRange(
+                new object[]
+                {
+            "None",
+            "PersonID",
+            "NationalNo",
+            "FirstName",
+            "SecondName",
+            "ThirdName",
+            "LastName",
+            "Phone",
+            "Email"
+                });
+
+            cbFilterBy.SelectedIndex = 0;
+
+            txtFilterValue.Visible = false;
+
+            _PreparePeopleGrid();
+            _RefreshPeopleList();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -55,7 +83,7 @@ namespace DVLD.People
             {
                 MessageBox.Show("Person deleted successfully.");
 
-                dgvPeople.DataSource = clsPerson.GetAllPeople();
+                _RefreshPeopleList();
             }
             else
             {
@@ -73,8 +101,7 @@ namespace DVLD.People
 
             addPersonForm.ShowDialog();
 
-            dgvPeople.DataSource =
-                clsPerson.GetAllPeople();
+            _RefreshPeopleList();
         }
 
         private void btnEditPerson_Click(
@@ -94,7 +121,115 @@ namespace DVLD.People
 
             updatePersonForm.ShowDialog();
 
-            dgvPeople.DataSource = clsPerson.GetAllPeople();
+            _RefreshPeopleList();
+        }
+
+        private void _PreparePeopleGrid()
+        {
+            dgvPeople.ReadOnly = true;
+            dgvPeople.AllowUserToAddRows = false;
+            dgvPeople.AllowUserToDeleteRows = false;
+            dgvPeople.MultiSelect = false;
+
+            dgvPeople.SelectionMode =
+                DataGridViewSelectionMode.FullRowSelect;
+
+            dgvPeople.AutoSizeColumnsMode =
+                DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        private void _RefreshPeopleList()
+        {
+            _PeopleTable = clsPerson.GetAllPeople();
+
+            dgvPeople.DataSource = _PeopleTable;
+
+            _ApplyFilter();
+        }
+
+        private void _ApplyFilter()
+        {
+            if (_PeopleTable == null)
+            {
+                return;
+            }
+
+            string filterBy = cbFilterBy.Text;
+            string filterValue =
+                txtFilterValue.Text.Trim();
+
+            if (filterBy == "None" ||
+                string.IsNullOrWhiteSpace(filterValue))
+            {
+                _PeopleTable.DefaultView.RowFilter = "";
+
+                _UpdateRecordsCount();
+                return;
+            }
+
+            if (filterBy == "PersonID")
+            {
+                int personID;
+
+                if (int.TryParse(filterValue, out personID))
+                {
+                    _PeopleTable.DefaultView.RowFilter =
+                        "PersonID = " + personID;
+                }
+                else
+                {
+                    _PeopleTable.DefaultView.RowFilter =
+                        "1 = 0";
+                }
+            }
+            else
+            {
+                filterValue =
+                    filterValue.Replace("'", "''");
+
+                _PeopleTable.DefaultView.RowFilter =
+                    "[" + filterBy + "] LIKE '%" +
+                    filterValue + "%'";
+            }
+
+            _UpdateRecordsCount();
+        }
+
+        private void _UpdateRecordsCount()
+        {
+            if (_PeopleTable == null)
+            {
+                lblRecordsCount.Text = "0";
+                return;
+            }
+
+            lblRecordsCount.Text =
+                _PeopleTable.DefaultView.Count.ToString();
+        }
+
+        private void cbFilterBy_SelectedIndexChanged(
+            object sender, EventArgs e)
+        {
+            bool filterIsEnabled =
+                cbFilterBy.Text != "None";
+
+            txtFilterValue.Visible =
+                filterIsEnabled;
+
+            txtFilterValue.Clear();
+
+            if (filterIsEnabled)
+            {
+                txtFilterValue.Focus();
+            }
+
+            _ApplyFilter();
+        }
+
+        private void txtFilterValue_TextChanged(
+            object sender, EventArgs e)
+        {
+            _ApplyFilter();
         }
     }
 }

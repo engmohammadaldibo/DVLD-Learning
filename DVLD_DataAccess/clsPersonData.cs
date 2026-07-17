@@ -428,5 +428,107 @@ namespace DVLD_DataAccess
 
             return isFound;
         }
+
+        public static bool GetPersonInfoByNationalNo(
+    string NationalNo,
+    ref int PersonID,
+    ref string FirstName,
+    ref string SecondName,
+    ref string ThirdName,
+    ref string LastName,
+    ref DateTime DateOfBirth,
+    ref byte Gendor,
+    ref string Address,
+    ref string Phone,
+    ref string Email,
+    ref int NationalityCountryID,
+    ref string ImagePath)
+        {
+            bool isFound = false;
+
+            SqlConnection connection =
+                new SqlConnection(
+                    clsDataAccessSettings.ConnectionString);
+
+            string query =
+                @"SELECT *
+          FROM dbo.People
+          WHERE NationalNo = @NationalNo";
+
+            SqlCommand command =
+                new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue(
+                "@NationalNo", NationalNo);
+
+            try
+            {
+                connection.Open();
+
+                SqlDataReader reader =
+                    command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    isFound = true;
+
+                    PersonID =
+                        (int)reader["PersonID"];
+
+                    FirstName =
+                        (string)reader["FirstName"];
+
+                    SecondName =
+                        (string)reader["SecondName"];
+
+                    ThirdName =
+                        reader["ThirdName"] == DBNull.Value
+                        ? ""
+                        : (string)reader["ThirdName"];
+
+                    LastName =
+                        (string)reader["LastName"];
+
+                    DateOfBirth =
+                        (DateTime)reader["DateOfBirth"];
+
+                    Gendor =
+                        (byte)reader["Gendor"];
+
+                    Address =
+                        (string)reader["Address"];
+
+                    Phone =
+                        (string)reader["Phone"];
+
+                    Email =
+                        reader["Email"] == DBNull.Value
+                        ? ""
+                        : (string)reader["Email"];
+
+                    NationalityCountryID =
+                        (int)reader["NationalityCountryID"];
+
+                    ImagePath =
+                        reader["ImagePath"] == DBNull.Value
+                        ? ""
+                        : (string)reader["ImagePath"];
+                }
+
+                reader.Close();
+            }
+            catch (Exception)
+            {
+                isFound = false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return isFound;
+        }
+
+
     }
 }

@@ -12,6 +12,23 @@ namespace DVLD_Business
         public string SecondName { get; set; }
         public string ThirdName { get; set; }
         public string LastName { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                string fullName =
+                    FirstName + " " +
+                    SecondName + " " +
+                    ThirdName + " " +
+                    LastName;
+
+                return fullName
+                    .Replace("  ", " ")
+                    .Trim();
+            }
+        }
+
         public DateTime DateOfBirth { get; set; }
         public byte Gendor { get; set; }
         public string Address { get; set; }
@@ -205,6 +222,63 @@ namespace DVLD_Business
         public static bool IsPersonExist(string NationalNo)
         {
             return clsPersonData.IsPersonExist(NationalNo);
+        }
+
+        public static clsPerson Find(string NationalNo)
+        {
+            int PersonID = -1;
+
+            string FirstName = "";
+            string SecondName = "";
+            string ThirdName = "";
+            string LastName = "";
+
+            DateTime DateOfBirth = DateTime.Now;
+
+            byte Gendor = 0;
+
+            string Address = "";
+            string Phone = "";
+            string Email = "";
+
+            int NationalityCountryID = -1;
+            string ImagePath = "";
+
+            bool isFound =
+                clsPersonData.GetPersonInfoByNationalNo(
+                    NationalNo,
+                    ref PersonID,
+                    ref FirstName,
+                    ref SecondName,
+                    ref ThirdName,
+                    ref LastName,
+                    ref DateOfBirth,
+                    ref Gendor,
+                    ref Address,
+                    ref Phone,
+                    ref Email,
+                    ref NationalityCountryID,
+                    ref ImagePath);
+
+            if (isFound)
+            {
+                return new clsPerson(
+                    PersonID,
+                    NationalNo,
+                    FirstName,
+                    SecondName,
+                    ThirdName,
+                    LastName,
+                    DateOfBirth,
+                    Gendor,
+                    Address,
+                    Phone,
+                    Email,
+                    NationalityCountryID,
+                    ImagePath);
+            }
+
+            return null;
         }
 
     }

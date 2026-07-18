@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DVLD.People;
+using DVLD.Users;
+using DVLD_Business;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,8 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DVLD_Business;
-using DVLD.People;
+using DVLD.Users;
 
 
 namespace DVLD
@@ -33,6 +35,7 @@ namespace DVLD
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             DataTable countriesTable = clsCountry.GetAllCountries();
 
             cbCountries.DisplayMember = "CountryName";
@@ -41,7 +44,10 @@ namespace DVLD
 
             dgvPeople.DataSource = clsPerson.GetAllPeople();
 
+            DVLD.Users.frmManageUsers frm =
+    new DVLD.Users.frmManageUsers();
 
+            frm.ShowDialog();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

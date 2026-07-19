@@ -216,5 +216,10 @@ namespace DVLD.Users
         {
             Close();
         }
+
+        private void lblMode_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

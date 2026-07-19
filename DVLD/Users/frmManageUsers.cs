@@ -62,12 +62,16 @@ namespace DVLD.Users
 
         private void showDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmShowPersonInfo frm = new frmShowPersonInfo(
-        Convert.ToInt32(dgvUsers.CurrentRow.Cells[1].Value));
+            if (dgvUsers.CurrentRow == null)
+                return;
+
+            int personID = Convert.ToInt32(
+                dgvUsers.CurrentRow.Cells[1].Value);
+
+            frmShowPersonInfo frm =
+                new frmShowPersonInfo(personID);
 
             frm.ShowDialog();
-
-            _RefreshUsersList();
         }
 
         private void addNewUserToolStripMenuItem_Click(object sender, EventArgs e)

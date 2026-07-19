@@ -46,11 +46,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\frmAddUpdateLocalDrivingLicenseApplication.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Application\frmAddUpdateLocalDrivingLicenseApplication.Designer.cs">
+      <DependentUpon>frmAddUpdateLocalDrivingLicenseApplication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Application\frmManageApplications.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Application\frmManageApplications.Designer.cs">
+      <DependentUpon>frmManageApplications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Application\frmManageLocalDrivingLicenseApplications.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Application\frmManageLocalDrivingLicenseApplications.Designer.cs">
+      <DependentUpon>frmManageLocalDrivingLicenseApplications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="clsGlobal.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="People\Controls\ctrlPersonCard.cs">
       <SubType>UserControl</SubType>
@@ -96,8 +121,20 @@
     <Compile Include="Users\frmManageUsers.Designer.cs">
       <DependentUpon>frmManageUsers.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Application\frmAddUpdateLocalDrivingLicenseApplication.resx">
+      <DependentUpon>frmAddUpdateLocalDrivingLicenseApplication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Application\frmManageApplications.resx">
+      <DependentUpon>frmManageApplications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Application\frmManageLocalDrivingLicenseApplications.resx">
+      <DependentUpon>frmManageLocalDrivingLicenseApplications.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\Controls\ctrlPersonCard.resx">
       <DependentUpon>ctrlPersonCard.cs</DependentUpon>
